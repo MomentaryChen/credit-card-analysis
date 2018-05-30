@@ -9,7 +9,7 @@ import pandas as pd
 
 csv_m = pd.read_csv("BANK_TWN_ALL_AG_M.CSV")    #男生
 csv_f = pd.read_csv("BANK_TWN_ALL_AG_F.CSV")    #女生
-
+#csv_m.head(5)
 #得到有幾筆資料
 def getCount(c):
     count=0;
@@ -96,8 +96,12 @@ plt.show()
     
 
 import re
+
+getTitle = {"食":"Food","衣":"Cloth","旅館":"Accommodation","交通":"Transportation fee","文教":"Edu","百貨":"Department store","其他":"other"}
+    
+        
 def findAvgItem(pattern):
-    pattern=r''+pattern+'.'
+    pattern=r''+pattern
     total_m_cost=[]
     total_f_cost=[]
     #result = re.search(pattern, string)
@@ -106,7 +110,7 @@ def findAvgItem(pattern):
     for str in list_name:
         if re.search(pattern, str):
             name.append(str)
-    print(name)
+    #print(name)
     #男生Item花費
     for i in range(csv_m_count):
         total=0
@@ -114,7 +118,7 @@ def findAvgItem(pattern):
             total += csv_m[name[j+1]][i]/csv_m[name[j]][i]
         total_m_cost.append(total/len(name))
    
-    print(total_m_cost)
+    #print(total_m_cost)
     
     print()
     #女生Item花費
@@ -123,9 +127,14 @@ def findAvgItem(pattern):
         for j in range(0,len(name),2):
             total += csv_f[name[j+1]][i]/csv_f[name[j]][i]
         total_f_cost.append(total/len(name))
-    print(total_f_cost)
+    #print(total_f_cost)
     #print(csv_f[name[1]][0],csv_f[name[0]][0])
-    plt.title(pattern)
+    plt.title(getTitle[pattern])
+    
+    m_num = len(total_f_cost)
+    m_num_month = []
+    for i in range(m_num):
+        m_num_month.append((i+1)%12)
     plt.bar(range(len(total_f_cost )),total_f_cost , fc='r') 
     plt.bar(range(len(total_m_cost)),total_m_cost , fc='g') 
     plt.show()
