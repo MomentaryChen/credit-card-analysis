@@ -77,10 +77,11 @@ for i in range(csv_f_count):
 for i in range(csv_m_count):
     total_m_avg.append(total_m_money[i]/total_m_money_count[i])
     
-print(total_f_avg)
-print(total_m_avg)
+#print(total_f_avg)
+#print(total_m_avg)
 
 import matplotlib.pyplot as plt 
+'''
 plt.bar(range(len(total_f_avg)),total_f_avg , fc='r') 
 plt.title('女生')
 plt.show()
@@ -88,9 +89,52 @@ plt.show()
 plt.bar(range(len(total_m_avg)),total_m_avg , fc='g') 
 plt.title('男生')
 plt.show()
-
+'''
 plt.bar(range(len(total_f_avg)),total_f_avg , fc='r') 
 plt.bar(range(len(total_m_avg)),total_m_avg , fc='g') 
 plt.show()
     
+
+import re
+def findAvgItem(pattern):
+    pattern=r''+pattern+'.'
+    total_m_cost=[]
+    total_f_cost=[]
+    #result = re.search(pattern, string)
+    #找出Item名稱
+    name = []
+    for str in list_name:
+        if re.search(pattern, str):
+            name.append(str)
+    print(name)
+    #男生Item花費
+    for i in range(csv_m_count):
+        total=0
+        for j in range(0,len(name),2):
+            total += csv_m[name[j+1]][i]/csv_m[name[j]][i]
+        total_m_cost.append(total/len(name))
+   
+    print(total_m_cost)
     
+    print()
+    #女生Item花費
+    for i in range(csv_f_count):
+        total=0
+        for j in range(0,len(name),2):
+            total += csv_f[name[j+1]][i]/csv_f[name[j]][i]
+        total_f_cost.append(total/len(name))
+    print(total_f_cost)
+    #print(csv_f[name[1]][0],csv_f[name[0]][0])
+    plt.title(pattern)
+    plt.bar(range(len(total_f_cost )),total_f_cost , fc='r') 
+    plt.bar(range(len(total_m_cost)),total_m_cost , fc='g') 
+    plt.show()
+    return
+
+#findAvgItem("食")    #少
+#findAvgItem("衣")    #多
+#findAvgItem("旅館")  #多
+#findAvgItem("交通")  #少
+#findAvgItem("文教")  #多
+#findAvgItem("百貨")  #多
+#findAvgItem("其他")  #多
