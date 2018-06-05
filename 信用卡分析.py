@@ -132,10 +132,16 @@ def findAvgItem(pattern):
     #print(total_f_cost)
     #print(csv_f[name[1]][0],csv_f[name[0]][0])
     
-    '''plt.title(getTitle[pattern])
-    plt.bar(range(len(total_f_cost )),total_f_cost , fc='r') 
-    plt.bar(range(len(total_m_cost)),total_m_cost , fc='g') 
-    plt.show()'''
+    plt.title(getTitle[pattern])
+    ran_x = []
+    ran_y = []
+    for i in range(0,len(total_f_cost )*3,3):
+        ran_x.append(i)
+        ran_y.append(i+2)
+    
+    plt.bar(ran_x ,total_f_cost , fc='r',width=2)
+    plt.bar(ran_y,total_m_cost , fc='g', width=2) 
+    plt.show()
     return total_m_cost,total_f_cost
 
 key_word = ["食","衣","旅館","交通","文教","百貨","其他"]
