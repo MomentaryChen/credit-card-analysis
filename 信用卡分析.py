@@ -9,6 +9,7 @@ import pandas as pd
 
 csv_m = pd.read_csv("BANK_TWN_ALL_AG_M.CSV")    #男生
 csv_f = pd.read_csv("BANK_TWN_ALL_AG_F.CSV")    #女生
+
 #csv_m.head(5)
 #得到有幾筆資料
 def getCount(c):
@@ -67,6 +68,8 @@ for i in range(0,csv_f_count):
         #print(csv_m[list_name[j+2]][i])
         total += int(csv_f[list_name[j]][i])
     total_f_money_count.append(total)
+    
+
 
 total_m_avg=[]
 total_f_avg=[]
@@ -95,8 +98,43 @@ plt.title("Total")
 plt.bar(range(len(total_f_avg)),total_f_avg , fc='r') 
 plt.bar(range(len(total_m_avg)),total_m_avg , fc='g') 
 plt.show()
-    
 
+#得到食品平均刷卡比數上升
+food_count=[]
+x=['103','104','105','106']
+s_m=0
+s_f=0
+y_m=[]
+y_f=[]
+f=0
+for i in range(csv_m_count):
+    if(f==0):
+        s_m+=int(csv_m[list_name[3]][i])
+        s_f+=int(csv_m[list_name[3]][i])
+        f=1
+    elif(i%11!=0):
+        s_m+=int(csv_m[list_name[3]][i])
+        s_f+=int(csv_f[list_name[3]][i])
+    else:
+        y_m.append(s_m)
+        y_f.append(s_f)
+        s=0
+s=pd.Series(y_m, index=x)
+s=pd.DataFrame(s,columns=['Count'])
+s
+#print(s)
+#plt.lable='123'
+
+#plt.plot(x,y)
+
+#print(food_count)
+#plt.ylabel="count"
+plt.xticks(rotation=30) 
+plt.plot(x,y_m,label='man')
+plt.plot(x,y_f,label='woman')
+plt.legend()
+plt.show()
+'''
 import re
 
 getTitle = {"食":"Food","衣":"Cloth","旅館":"Accommodation","交通":"Transportation fee","文教":"Edu","百貨":"Department store","其他":"other"}
@@ -138,6 +176,7 @@ def findAvgItem(pattern):
     for i in range(0,len(total_f_cost )*3,3):
         ran_x.append(i)
         ran_y.append(i+2)
+    
     
     plt.bar(ran_x ,total_f_cost , fc='r',width=2)
     plt.bar(ran_y,total_m_cost , fc='g', width=2) 
@@ -204,4 +243,4 @@ patches,text1,text2 = plt.pie(sizes,
 # x，y轴刻度设置一致，保证饼图为圆形
 
 plt.axis('equal')
-plt.show()
+plt.show()'''
